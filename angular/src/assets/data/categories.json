@@ -1,0 +1,26 @@
+{
+    "A": [
+        {
+            "Title": "JavaScript Tutorial",
+            "Url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript"
+        },
+        {
+            "Title": "Angular Basics",
+            "Url": "https://angular.io/"
+        },
+        {
+            "Title": "React introduction",
+            "Url": "https://react.dev/"
+        }
+    ],
+    "B": [
+        {
+            "Title": "React introduction",
+            "Url": "https://react.dev/"
+        },
+        {
+            "Title": "React introduction",
+            "Url": "https://react.dev/"
+        }
+    ]
+}

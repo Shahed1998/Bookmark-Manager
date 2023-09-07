@@ -1,0 +1,90 @@
+<!-- Modal -->
+ <ng-template #template>
+  <div class="modal-header">
+    <h4 class="modal-title pull-left">Add Bookmark</h4>
+    <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="modalRef?.hide()">
+      <span aria-hidden="true" class="visually-hidden">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- Form -->
+    <form [formGroup]="addBookmarks">
+
+      <!-- Title -->
+        <div class="form-group">
+          <input type="text" class="form-control" id="Title" placeholder="Title" formControlName="Title">
+          <!-- Error -->
+          <span class="err" *ngIf="Title.invalid && saveBtnPressed">
+            <span *ngIf="Title.hasError('required')">* Title is required</span>
+            <span *ngIf="Title.hasError('maxlength')">* Max 30 characters is allowed</span>
+          </span>
+        </div>
+
+        <!-- URL -->
+        <div class="form-group mt-2">
+          <input type="text" class="form-control" id="Url" placeholder="Url" formControlName="Url">
+          <!-- Error -->
+          <span class="err" *ngIf="Url.invalid && saveBtnPressed">
+            <span *ngIf="Url.hasError('required')">* URL is required</span>
+          </span>
+          <span class="err" *ngIf="addBookmarks.hasError('invalidUrl') && Url.valid && saveBtnPressed">* URL is invalid</span>
+        </div>
+
+        <!-- Category dropdown -->
+        <div class="form-group mt-2">
+            <!--Using items input-->
+            <ng-select [items]="categoryName" class="w-50 d-inline-block" [readonly]="addCategoryBtnPressed"
+            placeholder="Enter category"
+            bindLabel="name" 
+            bindValue="name" 
+            formControlName="Category">
+            </ng-select>
+            <button class="btn btn-secondary w-25 mx-2" (click)="clickedCatBtn()">+</button>
+        </div>
+
+        <!-- New category -->
+        <div class="form-group mt-2" *ngIf="addCategoryBtnPressed">
+            <input type="text" class="form-control" id="Category" placeholder="New Category Name" formControlName="NewCategoryName">
+            <span class="err" *ngIf="newCategoryError && saveBtnPressed">* New category is required</span>
+          </div>
+          <!-- Buttons -->
+        <div class="form-group mt-2">
+            <button type="button" class="btn btn-danger" (click)="resetModalFields()">Cancel</button>
+            <button type="button" class="btn btn-primary mx-2" (click)="submitBookmark()">Save</button>
+        </div>
+      </form>
+  </div>
+</ng-template>
+
+<!-- Header -->
+<div class="container-fluid text-center p-5 shadow">
+    <h3>Bookmark Manager <button class="btn btn-primary" (click)="openModal(template)">Add Bookmark</button></h3>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <div *ngFor="let cat of categoryName" class="my-5">
+        <div><h6>Category {{cat}}</h6></div>
+        <div  class="card w-100 shadow">
+          <div class="card-body">
+            <div class="row p-2" *ngFor="let sub of categoryWithSubCategory[cat]">
+              <div class="col-10">
+                <a href="{{sub.Url}}" target="_blank">{{sub.Title}}</a>
+              </div>
+              <div class="col-2"><button class="btn btn-primary" (click)="details(sub, cat)">Details</button></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <div class="card shadow w-100 h-50" style="margin-top: 75px;" [hidden]="!subCatDetailsPressed">
+        <div class="card-body mt-2 p-2">
+          <div>Title: {{subCategoryDetails.Title}}</div>
+          <div>Url: {{subCategoryDetails.Url}}</div>
+          <div>Category: {{subCategoryDetails.Category}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
