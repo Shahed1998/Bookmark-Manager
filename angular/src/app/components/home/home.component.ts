@@ -5,21 +5,22 @@ import {
   FormControl,
   FormGroup,
   Validators,
-  AbstractControl
+  AbstractControl,
 } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
   modalRef?: BsModalRef;
   saveBtnPressed: boolean = false;
   addBookmarks!: FormGroup;
   addCategoryBtnPressed: boolean = false;
-  newCategoryError: boolean = true
+  newCategoryError: boolean = true;
+  bookmarks = null;
 
   // NgSelect
   categoryName: Array<string> = [];
@@ -28,10 +29,14 @@ export class HomeComponent implements OnInit {
   subCategoryDetails: any = {
     Title: '',
     Url: '',
-    Category: ''
+    Category: '',
   };
 
-  constructor(private modalService: BsModalService, private fb: FormBuilder, private apiService: ApiService) {}
+  constructor(
+    private modalService: BsModalService,
+    private fb: FormBuilder,
+    private apiService: ApiService
+  ) {}
 
   ngOnInit(): void {
     this.addBookMarkBuilder();
@@ -44,28 +49,35 @@ export class HomeComponent implements OnInit {
     this.getAllCategories();
   }
 
-  getAllCategories(){
-    let bookmarks = this.apiService.getAllCategories();
-    this.categoryName = Object.keys(bookmarks)
-    this.categoryWithSubCategory = bookmarks
+  getAllCategories() {
+    this.bookmarks = this.apiService.getAllCategories();
+    if (this.bookmarks) {
+      this.categoryName = Object.keys(this.bookmarks);
+      this.categoryWithSubCategory = this.bookmarks;
+    }
   }
-  
- 
+
   openModal(template: TemplateRef<any>) {
-    this.addCategoryBtnPressed = false;
+    if (!this.bookmarks) {
+      this.addCategoryBtnPressed = true;
+    } else {
+      this.addCategoryBtnPressed = false;
+    }
     this.modalRef = this.modalService.show(template);
   }
 
   addBookMarkBuilder() {
-    this.addBookmarks = this.fb.group({
-      Title: ['', [Validators.required, Validators.maxLength(30)]],
-      Url: ['', Validators.required],
-      Category: [null],
-      NewCategoryName: [null]
-    },
-    {
-      validators: [this.urlValidatorFn],
-    });
+    this.addBookmarks = this.fb.group(
+      {
+        Title: ['', [Validators.required, Validators.maxLength(30)]],
+        Url: ['', Validators.required],
+        Category: [null],
+        NewCategoryName: [null],
+      },
+      {
+        validators: [this.urlValidatorFn],
+      }
+    );
   }
 
   // ------------------------------------------------------------------------
@@ -73,42 +85,43 @@ export class HomeComponent implements OnInit {
   // ------------------------------------------------------------------------
   urlValidatorFn(control: AbstractControl) {
     // URL validation regular expression
-    var regex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-    return regex.test(control.get('Url')!.value)
-      ? null
-      : { invalidUrl: true };
+    var regex =
+      /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    return regex.test(control.get('Url')!.value) ? null : { invalidUrl: true };
   }
-
 
   // ------------------------------------------------------------------------
   // On submit
   // ------------------------------------------------------------------------
-  submitBookmark(){
+  submitBookmark() {
     this.saveBtnPressed = true;
 
-    if(!this.Category.value && !this.NewCategory.value){ 
-      this.newCategoryError = true
-    }else{
-      this.apiService.saveAllCategories(this.addBookmarks.value, this.categoryWithSubCategory)
+    if (!this.Category.value && !this.NewCategory.value) {
+      this.newCategoryError = true;
+    } else {
+      this.apiService.saveAllCategories(
+        this.addBookmarks.value,
+        this.categoryWithSubCategory
+      );
       this.addBookmarks.reset();
       this.getAllCategories();
     }
   }
 
-  resetModalFields(){
+  resetModalFields() {
     this.addBookmarks.reset();
     this.addCategoryBtnPressed = false;
     this.saveBtnPressed = false;
     this.newCategoryError = false;
   }
 
-  clickedCatBtn(){
+  clickedCatBtn() {
     this.addCategoryBtnPressed = true;
     this.newCategoryError = false;
     this.Category.reset();
   }
 
-  details(sub: any, cat: string){
+  details(sub: any, cat: string) {
     this.subCategoryDetails = sub;
     this.subCategoryDetails.Category = cat;
     this.subCategoryDetails.Title = sub.Title;
@@ -120,18 +133,18 @@ export class HomeComponent implements OnInit {
   // Gets
   // ------------------------------------------------------------------------
   get Title() {
-    return this.addBookmarks.get("Title") as FormControl;
+    return this.addBookmarks.get('Title') as FormControl;
   }
 
   get Url() {
-    return this.addBookmarks.get("Url") as FormControl;
+    return this.addBookmarks.get('Url') as FormControl;
   }
 
   get Category() {
-    return this.addBookmarks.get("Category") as FormControl
+    return this.addBookmarks.get('Category') as FormControl;
   }
 
-  get NewCategory(){
-    return this.addBookmarks.get("NewCategoryName") as FormControl
+  get NewCategory() {
+    return this.addBookmarks.get('NewCategoryName') as FormControl;
   }
 }

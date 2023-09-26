@@ -1,7 +1,15 @@
-.err{
-    color: red
+.err {
+  color: red;
 }
 
-a{
-    text-decoration: none;
+a {
+  text-decoration: none;
+}
+
+.categoryField {
+  width: 88%;
+}
+
+.addNewCategoryBtn {
+  width: 8%;
 }
