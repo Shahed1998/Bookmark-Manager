@@ -8,6 +8,7 @@ import {
   AbstractControl,
 } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
+import { Bookmark } from 'src/app/models/bookmark';
 
 @Component({
   selector: 'app-home',
@@ -95,14 +96,18 @@ export class HomeComponent implements OnInit {
   // ------------------------------------------------------------------------
   submitBookmark() {
     this.saveBtnPressed = true;
-
     if (!this.Category.value && !this.NewCategory.value) {
       this.newCategoryError = true;
     } else {
-      this.apiService.saveAllCategories(
-        this.addBookmarks.value,
-        this.categoryWithSubCategory
-      );
+      let bkMark: Bookmark = new Bookmark();
+
+      bkMark.Title = this.Title.value;
+      bkMark.URL = this.Url.value;
+      if (this.Category.value) bkMark.Category = this.Category.value;
+      else bkMark.Category = this.NewCategory.value;
+
+      this.apiService.saveBookmark(bkMark);
+
       this.addBookmarks.reset();
       this.getAllCategories();
     }
