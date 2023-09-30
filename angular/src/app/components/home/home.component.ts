@@ -55,6 +55,7 @@ export class HomeComponent implements OnInit {
     if (this.bookmarks) {
       this.categoryName = Object.keys(this.bookmarks);
       this.categoryWithSubCategory = this.bookmarks;
+      console.log(this.bookmarks);
     }
   }
 

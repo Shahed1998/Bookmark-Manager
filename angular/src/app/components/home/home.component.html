@@ -142,7 +142,7 @@
               *ngFor="let sub of categoryWithSubCategory[cat]"
             >
               <div class="col-10">
-                <a href="{{ sub.Url }}" target="_blank">{{ sub.Title }}</a>
+                <a href="{{ sub.URL }}" target="_blank">{{ sub.Title }}</a>
               </div>
               <div class="col-2">
                 <button class="btn btn-primary" (click)="details(sub, cat)">
@@ -162,7 +162,7 @@
       >
         <div class="card-body mt-2 p-2">
           <div>Title: {{ subCategoryDetails.Title }}</div>
-          <div>Url: {{ subCategoryDetails.Url }}</div>
+          <div>Url: {{ subCategoryDetails.URL }}</div>
           <div>Category: {{ subCategoryDetails.Category }}</div>
         </div>
       </div>
