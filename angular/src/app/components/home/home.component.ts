@@ -1,4 +1,4 @@
-import { Component, TemplateRef, OnInit } from '@angular/core';
+import { Component, TemplateRef, OnInit, ViewChild } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import {
   FormBuilder,
@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Bookmark } from 'src/app/models/bookmark';
+import { faCoffee, faAward } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,8 @@ export class HomeComponent implements OnInit {
   addCategoryBtnPressed: boolean = false;
   newCategoryError: boolean = true;
   bookmarks = null;
+  faCoffee = faCoffee;
+  faAward = faAward;
 
   // NgSelect
   categoryName: Array<string> = [];
@@ -109,8 +112,9 @@ export class HomeComponent implements OnInit {
 
       this.apiService.saveBookmark(bkMark);
 
-      this.addBookmarks.reset();
       this.getAllCategories();
+      this.modalRef?.hide();
+      this.addBookmarks.reset();
     }
   }
 

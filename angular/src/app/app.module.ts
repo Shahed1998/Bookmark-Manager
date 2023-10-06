@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,11 +13,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ApiService } from './services/api.service';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    AddBookmarkComponent
-  ],
+  declarations: [AppComponent, HomeComponent, AddBookmarkComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -25,9 +21,10 @@ import { ApiService } from './services/api.service';
     ReactiveFormsModule,
     NgSelectModule,
     HttpClientModule,
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    FontAwesomeModule,
   ],
   providers: [ApiService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
