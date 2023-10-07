@@ -139,25 +139,28 @@
           <div class="card-body">
             <div
               class="row p-2"
-              *ngFor="let sub of categoryWithSubCategory[cat]"
+              *ngFor="let sub of categoryWithSubCategory[cat]; index as i"
             >
-              <div class="col-10">
+              <div class="col-9">
                 <a href="{{ sub.URL }}" target="_blank">{{ sub.Title }}</a>
               </div>
-              <div class="col-2">
-                <button class="btn btn-primary" (click)="details(sub, cat)">
-                  Details
+              <div class="col-3">
+                <button
+                  class="btn btn-primary"
+                  (click)="details(sub, cat)"
+                  tooltip="Details"
+                  placement="bottom"
+                >
+                  <fa-icon [icon]="faCircleInfo" class="faCircleInfo"></fa-icon>
                 </button>
-                <!-- --------------------------------------------------------- -->
-                <!-- Need Fix -->
-                <!-- Font awesome icon color need fix -->
-                <!-- --------------------------------------------------------- -->
-                <div>
-                  <fa-icon style="color: red" [icon]="faAward"></fa-icon>
-                </div>
-                <!-- --------------------------------------------------------- -->
-                <!-- Need Fix -->
-                <!-- --------------------------------------------------------- -->
+                <button
+                  class="btn mx-2 btn-danger"
+                  (click)="deleteSubCategory(cat, i)"
+                  tooltip="Delete"
+                  placement="bottom"
+                >
+                  <fa-icon [icon]="faTrash" class="faCircleInfo"></fa-icon>
+                </button>
               </div>
             </div>
           </div>

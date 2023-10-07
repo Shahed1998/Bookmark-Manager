@@ -13,3 +13,11 @@ a {
 .addNewCategoryBtn {
   width: 8%;
 }
+
+fa-icon ::ng-deep svg path {
+  fill: #fff;
+  display: inline;
+  /* Stroke is used for border */
+  /* stroke: red;
+  stroke-width: 10; */
+}

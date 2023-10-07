@@ -9,7 +9,7 @@ import {
 } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 import { Bookmark } from 'src/app/models/bookmark';
-import { faCoffee, faAward } from '@fortawesome/free-solid-svg-icons';
+import { faCircleInfo, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-home',
@@ -23,8 +23,10 @@ export class HomeComponent implements OnInit {
   addCategoryBtnPressed: boolean = false;
   newCategoryError: boolean = true;
   bookmarks = null;
-  faCoffee = faCoffee;
-  faAward = faAward;
+
+  // Font Awesome
+  faCircleInfo = faCircleInfo;
+  faTrash = faTrash;
 
   // NgSelect
   categoryName: Array<string> = [];
@@ -137,6 +139,17 @@ export class HomeComponent implements OnInit {
     this.subCategoryDetails.Title = sub.Title;
     this.subCategoryDetails.Url = sub.Url;
     this.subCatDetailsPressed = true;
+  }
+
+  deleteSubCategory(cat: string, index: number) {
+    // ------------------------------------------------
+    // Need to finish
+    // Delete from local storage using api service
+    // Call getAllCategories()
+    // Data structure { Category: [{}, {}, {}] }
+    // Access the category and remove the index
+    // ------------------------------------------------
+    console.log(cat, index);
   }
 
   // ------------------------------------------------------------------------

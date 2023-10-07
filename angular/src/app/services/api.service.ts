@@ -31,6 +31,10 @@ export class ApiService {
       localStorage.setItem('Bookmarks', JSON.stringify(bookmarkList));
     }
   }
+
+  deleteSubCategory(cat: string, index: number): boolean {
+    return false;
+  }
 }
 
 // -------------------------------------------------------------------------------

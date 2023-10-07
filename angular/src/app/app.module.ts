@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -23,6 +24,7 @@ import { ApiService } from './services/api.service';
     HttpClientModule,
     ModalModule.forRoot(),
     FontAwesomeModule,
+    TooltipModule.forRoot(),
   ],
   providers: [ApiService],
   bootstrap: [AppComponent],
